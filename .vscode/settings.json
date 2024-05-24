@@ -1,0 +1,39 @@
+{
+    "files.eol": "\n",
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "eslint.format.enable": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit",
+        "source.fixAll": "explicit",
+        "source.organizeImports": "explicit",
+        "source.sortMembers": "explicit"
+    },
+    "eslint.validate": [
+        "javascript",
+        "typescript"
+    ],
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "eslint.options": {
+        "overrideConfigFile": ".eslintrc.js"
+    },
+    "editor.formatOnSave": true,
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "typescript.preferences.importModuleSpecifier": "non-relative",
+    "cSpell.words": [
+        "APPLEMDM",
+        "GSUIT",
+        "iccid",
+        "idmanagement",
+        "nestjs",
+        "sendgrid"
+    ]
+}

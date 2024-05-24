@@ -1,0 +1,69 @@
+version: "3.8"
+services:
+  rabbitmq:
+    image: rabbitmq:3.12.14-management
+    restart: unless-stopped
+    volumes:
+      - rabbit_data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  db-main-master:
+      restart: always
+      image: docker.io/bitnami/postgresql:14
+      container_name: db-main-master
+      volumes:
+        - "db_main_master_data:/bitnami/postgresql"
+      ports:
+        - 52155:5432
+      environment:
+        POSTGRESQL_REPLICATION_MODE: master
+        POSTGRESQL_REPLICATION_USER: postgres
+        POSTGRESQL_REPLICATION_PASSWORD: postgres
+        POSTGRESQL_USERNAME: postgres
+        POSTGRESQL_PASSWORD: postgres
+        POSTGRESQL_DATABASE: db_main_data
+
+  db-main-slave:
+      restart: always
+      container_name: db-main-slave
+      image: docker.io/bitnami/postgresql:14
+      depends_on:
+        - db-main-master
+      ports:
+        - 52156:5432
+      environment:
+        POSTGRESQL_REPLICATION_MODE: slave
+        POSTGRESQL_REPLICATION_USER: postgres
+        POSTGRESQL_REPLICATION_PASSWORD: postgres
+        POSTGRESQL_MASTER_HOST:  db-main-master 
+        POSTGRESQL_PASSWORD: postgres
+        POSTGRESQL_MASTER_PORT_NUMBER: 5432
+
+  redis-shop-advanced-primary:
+    restart: always
+    container_name: redis-shop-advanced-primary
+    image: redis/redis-stack-server:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - "redis_data:/data"
+    command: redis-server --requirepass mypassword
+
+  redis-shop-advanced-secondary:
+    restart: always
+    container_name: redis-shop-advanced-secondary
+    image: redis/redis-stack-server:latest
+    ports:
+      - "6479:6379"
+    depends_on:
+      - redis-shop-advanced-primary 
+    command: redis-server --masterauth mypassword --requirepass mypassword --slaveof redis-primary 6379
+
+volumes:
+  redis_data:
+  rabbit_data:
+  db_main_master_data:
+    driver: local
+  
