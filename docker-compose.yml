@@ -1,18 +1,18 @@
 version: "3.8"
 services:
-  rabbitmq:
-    image: rabbitmq:3.12.14-management
-    restart: unless-stopped
-    volumes:
-      - rabbit_data:/var/lib/rabbitmq
-    ports:
-      - "5672:5672"
-      - "15672:15672"
+  # rabbitmq:
+  #   image: rabbitmq:3.12.14-management
+  #   restart: unless-stopped
+  #   volumes:
+  #     - rabbit_data:/var/lib/rabbitmq
+  #   ports:
+  #     - "5672:5672"
+  #     - "15672:15672"
 
   postgres:
       restart: always
       image: docker.io/bitnami/postgresql:14
-      container_name: postgres
+      container_name: bettermode-postgres
       volumes:
         - "postgres_data:/bitnami/postgresql"
       ports:
@@ -20,11 +20,11 @@ services:
       environment:
         POSTGRESQL_USERNAME: postgres
         POSTGRESQL_PASSWORD: postgres
-        POSTGRESQL_DATABASE: db_main_data
+        POSTGRESQL_DATABASE: bettermode_task 
 
   redis:
     restart: always
-    container_name: redis
+    container_name: bettermode-redis
     image: redis/redis-stack-server:latest
     ports:
       - "6379:6379"

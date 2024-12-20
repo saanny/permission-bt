@@ -4,7 +4,7 @@ import { Entity, JoinTable, ManyToMany } from 'typeorm';
 
 @Entity({ name: 'groups' })
 export class GroupEntity extends BaseEntity {
-  @ManyToMany(() => UserEntity, (user) => user.groups)
+  @ManyToMany(() => UserEntity)
   @JoinTable({
     name: 'group_users',
     joinColumn: {

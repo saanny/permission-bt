@@ -1,7 +1,6 @@
 import { BaseEntity } from 'src/entities/base.entity';
-import { GroupEntity } from 'src/entities/group.entitiy';
 import { TweetEntity } from 'src/entities/tweet.entity';
-import { Column, Entity, ManyToMany, OneToMany } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 
 @Entity({ name: 'users' })
 export class UserEntity extends BaseEntity {
@@ -30,9 +29,6 @@ export class UserEntity extends BaseEntity {
     default: true,
   })
   isActive: boolean;
-
-  @ManyToMany(() => GroupEntity, (group) => group.users)
-  groups: GroupEntity[];
 
   @OneToMany(() => TweetEntity, (tweet) => tweet.author)
   tweets: TweetEntity[];

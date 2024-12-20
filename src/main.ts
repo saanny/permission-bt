@@ -1,34 +1,45 @@
+import { INestApplication } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { exec } from 'child_process';
-import * as cookieParser from 'cookie-parser';
 import { Logger } from 'nestjs-pino';
 import { AppModule } from './app.module';
 import { GlobalConfigService } from './config/global/global-config.service';
-import { setupSwagger } from './swagger';
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    bufferLogs: true,
+
+async function runMigrations(app: INestApplication): Promise<void> {
+  const logger = app.get(Logger);
+  const env = { ...process.env };
+
+  return new Promise((resolve, reject) => {
+    exec(
+      'yarn migrate',
+      { env, maxBuffer: 1024 * 1024 * 10 },
+      (error, stdout, stderr) => {
+        if (error) {
+          logger.error('Migration error:', error.message);
+          if (stderr) {
+            logger.error('Migration stderr:', stderr);
+          }
+          return reject(error);
+        }
+        logger.log('Migration stdout:', stdout);
+        resolve();
+      },
+    );
   });
+}
 
+async function bootstrap(): Promise<void> {
+  const app = await NestFactory.create(AppModule, { bufferLogs: true });
   app.useLogger(app.get(Logger));
-  app.use(cookieParser());
+
   const globalConfigService = app.get<GlobalConfigService>(GlobalConfigService);
-  app.enableVersioning();
-  setupSwagger(app);
+  if (globalConfigService.RUN_MIGRATION) {
+    await runMigrations(app);
+  }
 
-  const env = Object.assign(
-    { NODE_OPTIONS: '--max-old-space-size=256' },
-    process.env,
-  );
+  await app.startAllMicroservices();
 
-  globalConfigService.RUN_MIGRATION
-    ? exec('yarn migrate', { env }, function (error, stdout) {
-        error?.message && app.get(Logger).error(error?.message);
-        stdout && app.get(Logger).log(stdout);
-      })
-    : undefined;
-
-  await app.listen(3000);
+  await app.init();
 }
 
 bootstrap();

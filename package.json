@@ -18,8 +18,12 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migrate": "sequelize db:migrate",
-    "migrate:undo": "sequelize db:migrate:undo"
+     "migration:generate": "yarn run typeorm  migration:generate -d  src/database/data-source.config.ts src/database",
+    "migrate": "yarn run typeorm  migration:run -d ./dist/database/data-source.config.js",
+    "migration:revert": "yarn run typeorm  migration:revert",
+    "migration:generate:name": "yarn run typeorm  --migration:generate -d src/database -n $npm_config_name",
+    "migration:run:name": "yarn build && yarn run typeorm  migration:run",
+    "migration:revert:name": "yarn run typeorm  migration:revert" 
   },
   "dependencies": {
     "@nestjs/cache-manager": "^2.2.2",

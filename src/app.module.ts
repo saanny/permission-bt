@@ -4,9 +4,13 @@ import pino from 'pino';
 
 import { GlobalConfigModule } from 'src/config/global/global-config.module';
 import { GlobalConfigService } from 'src/config/global/global-config.service';
+import { MainDatabaseModule } from 'src/database/main-database.module';
+import { RepositoriesModule } from 'src/repositories/repositories.module';
 
 @Module({
   imports: [
+    MainDatabaseModule,
+    RepositoriesModule,
     LoggerModule.forRootAsync({
       inject: [GlobalConfigService],
       imports: [GlobalConfigModule],
