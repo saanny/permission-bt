@@ -9,12 +9,9 @@ import { redisConfiguration } from 'src/config/redis/redis-configuration';
     ConfigModule.forRoot({
       load: [redisConfiguration],
       validationSchema: Joi.object({
-        SHARED_REDIS_MASTER_HOST: Joi.string().required(),
-        SHARED_REDIS_MASTER_PORT: Joi.string().required(),
-        SHARED_REDIS_SLAVE1_HOST: Joi.string().required(),
-        SHARED_REDIS_SLAVE1_PORT: Joi.string().required(),
-        SHARED_REDIS_KEYPREFIX: Joi.string().required(),
-        SHARED_REDIS_PASSWORD: Joi.string().required(),
+        REDIS_HOST: Joi.string().required(),
+        REDIS_PORT: Joi.string().required(),
+        REDIS_PASSWORD: Joi.string().required(),
       }),
     }),
   ],

@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
-import { authConfiguration } from './auth-configuration';
 import { AuthConfigService } from './auth-config.service';
+import { authConfiguration } from './auth-configuration';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -10,10 +10,6 @@ import { AuthConfigService } from './auth-config.service';
       validationSchema: Joi.object({
         JWT_SECRET: Joi.string().required(),
         JWT_EXPIRES_IN_SECONDS: Joi.string().required(),
-        REFRESH_TOKEN_EXPIRATION: Joi.string().required(),
-        SESSION_EXPIRATION: Joi.string().required(),
-        SKIP_SESSION_MANAGEMENT: Joi.string().required(),
-        KEEP_ME_SIGN_IN_EXPIRATION: Joi.number().required(),
       }),
     }),
   ],

@@ -8,15 +8,10 @@ import { postgresConfiguration } from 'src/config/postgres/postgres-configuratio
     ConfigModule.forRoot({
       load: [postgresConfiguration],
       validationSchema: Joi.object({
-        DB_MASTER_HOST: Joi.string().required(),
-        DB_MASTER_PORT: Joi.number().required(),
-        DB_MASTER_USERNAME: Joi.string().required(),
-        DB_MASTER_PASSWORD: Joi.string().required(),
-
-        DB_SLAVE_HOST: Joi.string().required(),
-        DB_SLAVE_PORT: Joi.number().required(),
-        DB_SLAVE_USERNAME: Joi.string().required(),
-        DB_SLAVE_PASSWORD: Joi.string().required(),
+        DB_HOST: Joi.string().required(),
+        DB_PORT: Joi.number().required(),
+        DB_USERNAME: Joi.string().required(),
+        DB_PASSWORD: Joi.string().required(),
 
         DB_NAME: Joi.string().required(),
         DB_TIMEZONE: Joi.string().required(),

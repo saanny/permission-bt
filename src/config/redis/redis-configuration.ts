@@ -1,9 +1,6 @@
 import { registerAs } from '@nestjs/config';
 export const redisConfiguration = registerAs('Redis', () => ({
-  SHARED_REDIS_MASTER_HOST: process.env.SHARED_REDIS_MASTER_HOST,
-  SHARED_REDIS_MASTER_PORT: process.env.SHARED_REDIS_MASTER_PORT,
-  SHARED_REDIS_SLAVE1_HOST: process.env.SHARED_REDIS_SLAVE1_HOST,
-  SHARED_REDIS_SLAVE1_PORT: process.env.SHARED_REDIS_SLAVE1_PORT,
-  SHARED_REDIS_KEYPREFIX: process.env.SHARED_REDIS_KEYPREFIX,
-  SHARED_REDIS_PASSWORD: process.env.SHARED_REDIS_PASSWORD,
+  REDIS_HOST: process.env.REDIS_HOST,
+  REDIS_PORT: process.env.REDIS_PORT,
+  REDIS_PASSWORD: process.env.REDIS_PASSWORD,
 }));

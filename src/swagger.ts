@@ -7,10 +7,10 @@ import {
 
 export function setupSwagger(app: INestApplication) {
   const options = new DocumentBuilder()
-    .setTitle('Shop')
+    .setTitle('Bettermode task')
     .setDescription('The Api')
     .setVersion('1.0.0')
-    .addTag('Shop')
+    .addTag('Bettermode task')
     .addBearerAuth()
     .setExternalDoc('Postman collection', 'docs-json')
     .build();
@@ -20,7 +20,7 @@ export function setupSwagger(app: INestApplication) {
     swaggerOptions: {
       persistAuthorization: true,
     },
-    customSiteTitle: 'Shop API Docs',
+    customSiteTitle: 'Bettermode task API Docs',
   };
   SwaggerModule.setup('docs', app, document, customOptions);
 }

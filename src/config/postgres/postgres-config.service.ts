@@ -5,36 +5,20 @@ import { ConfigService } from '@nestjs/config';
 export class PostgresConfigService {
   constructor(private configService: ConfigService) {}
 
-  get DB_MASTER_HOST(): string {
-    return this.configService.get<string>('Postgres.DB_MASTER_HOST');
+  get DB_HOST(): string {
+    return this.configService.get<string>('Postgres.DB_HOST');
   }
 
-  get DB_MASTER_PORT(): number {
-    return this.configService.get<number>('Postgres.DB_MASTER_PORT');
+  get DB_PORT(): number {
+    return this.configService.get<number>('Postgres.DB_PORT');
   }
 
-  get DB_MASTER_USERNAME(): string {
-    return this.configService.get<string>('Postgres.DB_MASTER_USERNAME');
+  get DB_USERNAME(): string {
+    return this.configService.get<string>('Postgres.DB_USERNAME');
   }
 
-  get DB_MASTER_PASSWORD(): string {
-    return this.configService.get<string>('Postgres.DB_MASTER_PASSWORD');
-  }
-
-  get DB_SLAVE_HOST(): string {
-    return this.configService.get<string>('Postgres.DB_SLAVE_HOST');
-  }
-
-  get DB_SLAVE_PORT(): number {
-    return this.configService.get<number>('Postgres.DB_SLAVE_PORT');
-  }
-
-  get DB_SLAVE_USERNAME(): string {
-    return this.configService.get<string>('Postgres.DB_SLAVE_USERNAME');
-  }
-
-  get DB_SLAVE_PASSWORD(): string {
-    return this.configService.get<string>('Postgres.DB_SLAVE_PASSWORD');
+  get DB_PASSWORD(): string {
+    return this.configService.get<string>('Postgres.DB_PASSWORD');
   }
 
   get DB_NAME(): string {
