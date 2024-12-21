@@ -1,3 +1,4 @@
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { BaseEntity } from 'src/entities/base.entity';
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { UserEntity } from './user.entity';
@@ -7,7 +8,11 @@ export enum TweetCategory {
   NEWS = 'NEWS',
   TECH = 'TECH',
 }
-
+@ObjectType()
+export class TestTweet {
+  @Field(() => ID, { description: 'A unique identifier' })
+  id: string;
+}
 @Entity({ name: 'tweets' })
 export class TweetEntity extends BaseEntity {
   @Column({ type: 'uuid', nullable: false, name: 'author_id' })

@@ -1,0 +1,18 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type TestTweet {
+  """A unique identifier"""
+  id: ID!
+}
+
+type Query {
+  """
+  Paginates over tweets for the given user ID This API only retrieves those tweets that are viewable for the given user ID Tweets order should be based on 
+  """
+  paginateTweets(userId: ID!, limit: Int!, page: Int!): [TestTweet!]!
+
+  """Returns true if the given user ID can edit the given tweet ID"""
+  canEditTweet(userId: ID!, tweetId: ID!): Boolean!
+}

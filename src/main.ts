@@ -37,9 +37,8 @@ async function bootstrap(): Promise<void> {
     await runMigrations(app);
   }
 
-  await app.startAllMicroservices();
-
   await app.init();
+  await app.listen(3000);
 }
 
 bootstrap();

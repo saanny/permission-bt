@@ -2,13 +2,21 @@ import { Module } from '@nestjs/common';
 import { LoggerModule } from 'nestjs-pino';
 import pino from 'pino';
 
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { GraphQLModule } from '@nestjs/graphql';
+import { join } from 'path';
 import { GlobalConfigModule } from 'src/config/global/global-config.module';
 import { GlobalConfigService } from 'src/config/global/global-config.service';
 import { MainDatabaseModule } from 'src/database/main-database.module';
 import { RepositoriesModule } from 'src/repositories/repositories.module';
-
+import { TweetsResolver } from 'src/resolvers/tweets.resolver';
+import { GroupsResolver } from './resolvers/groups.resolver';
 @Module({
   imports: [
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+    }),
     MainDatabaseModule,
     RepositoriesModule,
     LoggerModule.forRootAsync({
@@ -44,6 +52,6 @@ import { RepositoriesModule } from 'src/repositories/repositories.module';
     }),
   ],
   controllers: [],
-  providers: [],
+  providers: [GroupsResolver, TweetsResolver],
 })
 export class AppModule {}
