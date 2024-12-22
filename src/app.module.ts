@@ -8,8 +8,8 @@ import { join } from 'path';
 import { GlobalConfigModule } from 'src/config/global/global-config.module';
 import { GlobalConfigService } from 'src/config/global/global-config.service';
 import { MainDatabaseModule } from 'src/database/main-database.module';
-import { RepositoriesModule } from 'src/repositories/repositories.module';
 import { TweetsResolver } from 'src/resolvers/tweets.resolver';
+import { ServicesModule } from 'src/services/service.module';
 import { GroupsResolver } from './resolvers/groups.resolver';
 @Module({
   imports: [
@@ -18,7 +18,8 @@ import { GroupsResolver } from './resolvers/groups.resolver';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
     MainDatabaseModule,
-    RepositoriesModule,
+
+    ServicesModule,
     LoggerModule.forRootAsync({
       inject: [GlobalConfigService],
       imports: [GlobalConfigModule],
