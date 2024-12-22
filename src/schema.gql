@@ -53,6 +53,16 @@ type Group {
   groupIds: [ID!]!
 }
 
+type UserType {
+  email: String!
+  username: String!
+}
+
+type AuthResponseType {
+  user: UserType!
+  token: String!
+}
+
 type Query {
   """
   Paginates over tweets for the given user ID This API only retrieves those tweets that are viewable for the given user ID Tweets order should be based on 
@@ -72,6 +82,12 @@ type Mutation {
 
   """Updates Tweet permissions based on the input"""
   updateTweetPermissions(UpdateTweetPermissions: UpdateTweetPermissionsInput!): Boolean!
+
+  """Register a user"""
+  register(RegisterUser: RegisterUserInput!): AuthResponseType!
+
+  """Login user"""
+  login(LoginUser: LoginUserInput!): AuthResponseType!
 }
 
 """Create group input object type."""
@@ -123,10 +139,21 @@ input UpdateTweetPermissionsInput {
   """
   A list of User IDs and Group IDs that can view this Tweet. It only applies if "inheritViewPermissions" is false.
   """
-  viewPermissions: [String!]!
+  viewPermissions: [ID!]!
 
   """
   A list of User IDs and Group IDs that can edit this Tweet. It only applies if "inheritEditPermissions" is false.
   """
-  editPermissions: [String!]!
+  editPermissions: [ID!]!
+}
+
+input RegisterUserInput {
+  email: String!
+  password: String!
+  username: String!
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
 }

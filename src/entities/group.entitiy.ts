@@ -1,10 +1,16 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { BaseEntity } from 'src/entities/base.entity';
 import { UserEntity } from 'src/entities/user.entity';
-import { Entity, JoinTable, ManyToMany } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
 
 @Entity({ name: 'groups' })
 export class GroupEntity extends BaseEntity {
+  @Column({
+    type: 'varchar',
+    length: 255,
+  })
+  name: string;
+
   @ManyToMany(() => UserEntity)
   @JoinTable({
     name: 'group_users',

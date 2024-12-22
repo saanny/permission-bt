@@ -8,10 +8,8 @@ import { join } from 'path';
 import { GlobalConfigModule } from 'src/config/global/global-config.module';
 import { GlobalConfigService } from 'src/config/global/global-config.service';
 import { MainDatabaseModule } from 'src/database/main-database.module';
-import { TweetsResolver } from 'src/resolvers/tweets.resolver';
-import { UsersResolver } from 'src/resolvers/users.resolver';
+import { ResolversModule } from 'src/resolvers/resolvers.module';
 import { ServicesModule } from 'src/services/service.module';
-import { GroupsResolver } from './resolvers/groups.resolver';
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -19,8 +17,8 @@ import { GroupsResolver } from './resolvers/groups.resolver';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
     MainDatabaseModule,
-
     ServicesModule,
+    ResolversModule,
     LoggerModule.forRootAsync({
       inject: [GlobalConfigService],
       imports: [GlobalConfigModule],
@@ -54,6 +52,6 @@ import { GroupsResolver } from './resolvers/groups.resolver';
     }),
   ],
   controllers: [],
-  providers: [GroupsResolver, TweetsResolver, UsersResolver],
+  providers: [],
 })
 export class AppModule {}

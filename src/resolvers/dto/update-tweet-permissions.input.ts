@@ -1,4 +1,4 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field, ID, InputType } from '@nestjs/graphql';
 
 @InputType({ description: 'Update tweet permissions input object type.' })
 export class UpdateTweetPermissionsInput {
@@ -16,12 +16,12 @@ export class UpdateTweetPermissionsInput {
   })
   inheritEditPermissions: boolean;
 
-  @Field(() => [String], {
+  @Field(() => [ID], {
     description: `A list of User IDs and Group IDs that can view this Tweet. It only applies if "inheritViewPermissions" is false.`,
   })
   viewPermissions: string[];
 
-  @Field(() => [String], {
+  @Field(() => [ID], {
     description: `A list of User IDs and Group IDs that can edit this Tweet. It only applies if "inheritEditPermissions" is false.`,
   })
   editPermissions: string[];

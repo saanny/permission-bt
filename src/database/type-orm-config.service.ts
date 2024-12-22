@@ -35,6 +35,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
         subscribersDir: 'subscriber',
       },
       ssl: false,
+      migrationsTransactionMode: 'each',
     } as TypeOrmModuleOptions;
   }
 }

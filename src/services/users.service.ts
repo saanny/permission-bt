@@ -1,8 +1,8 @@
 import {
-    BadRequestException,
-    Inject,
-    Injectable,
-    UnauthorizedException,
+  BadRequestException,
+  Inject,
+  Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService, TokenExpiredError } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -10,13 +10,13 @@ import { Redis } from 'ioredis';
 import { SignOptions } from 'jsonwebtoken';
 import { UsersRepository } from 'src/repositories/users.repository';
 import {
-    IUsersService,
-    LoginInput,
-    LoginResult,
-    MeInput,
-    MeResult,
-    RegisterInput,
-    RegisterResult,
+  IUsersService,
+  LoginInput,
+  LoginResult,
+  MeInput,
+  MeResult,
+  RegisterInput,
+  RegisterResult,
 } from 'src/services/interfaces';
 
 @Injectable()
@@ -39,9 +39,10 @@ export class UsersServiceImpl implements IUsersService {
       password: hash,
       username,
     });
+
     const accessToken = await this.generateAccessToken(user);
 
-    await this.saveAccessToken(userExist, accessToken);
+    await this.saveAccessToken(user, accessToken);
     return {
       user: {
         email,

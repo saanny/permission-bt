@@ -1,11 +1,16 @@
-import { ParseIntPipe } from '@nestjs/common';
+import { Inject, ParseIntPipe } from '@nestjs/common';
 import { Args, ID, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Tweet } from 'src/entities/tweet.entity';
 import { CreateTweetInput } from 'src/resolvers/dto/create-tweet.input';
 import { UpdateTweetPermissionsInput } from 'src/resolvers/dto/update-tweet-permissions.input';
+import { ITweetsService, TweetsService } from 'src/services/interfaces';
 
 @Resolver()
 export class TweetsResolver {
+  constructor(
+    @Inject(TweetsService)
+    private readonly tweetsService: ITweetsService,
+  ) {}
   @Query(() => [Tweet], {
     name: 'paginateTweets',
     description:
@@ -27,19 +32,28 @@ export class TweetsResolver {
   async canEditTweet(
     @Args('userId', { type: () => ID }) userId: string,
     @Args('tweetId', { type: () => ID }) tweetId: string,
-  ) {}
+  ) {
+    return await this.tweetsService.canEditTweet({ userId, tweetId });
+  }
 
   @Mutation(() => Tweet, {
     name: 'createTweet',
     description: 'Create a Tweet',
   })
-  async createTweet(@Args('CreateTweet') createTweet: CreateTweetInput) {}
+  async createTweet(@Args('CreateTweet') createTweet: CreateTweetInput) {
+    return this.tweetsService.createTweet(createTweet);
+  }
 
   @Mutation(() => Boolean, {
     name: 'updateTweetPermissions',
     description: 'Updates Tweet permissions based on the input',
   })
   async updateTweetPermissions(
-    @Args('UpdateTweetPermissions') createTweet: UpdateTweetPermissionsInput,
-  ) {}
+    @Args('UpdateTweetPermissions')
+    updateTweetPermissions: UpdateTweetPermissionsInput,
+  ) {
+    return await this.tweetsService.updateTweetPermissions(
+      updateTweetPermissions,
+    );
+  }
 }

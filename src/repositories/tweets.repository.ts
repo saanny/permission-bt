@@ -9,4 +9,8 @@ export class TweetsRepository {
     @InjectRepository(TweetEntity)
     private readonly entityRepository: Repository<TweetEntity>,
   ) {}
+  async create(data: Partial<TweetEntity>): Promise<TweetEntity> {
+    const tweet = this.entityRepository.create(data);
+    return await this.entityRepository.save(tweet);
+  }
 }
