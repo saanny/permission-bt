@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { RedisModule } from 'src/database/redis/redis.module';
 import { RepositoriesModule } from 'src/repositories/repositories.module';
 import { GroupsServiceImpl } from 'src/services/groups.service';
 import {
@@ -10,7 +11,7 @@ import { TweetsServiceImpl } from 'src/services/tweets.service';
 import { UsersServiceImpl } from 'src/services/users.service';
 
 @Module({
-  imports: [RepositoriesModule],
+  imports: [RepositoriesModule, RedisModule],
   providers: [
     {
       provide: GroupsService,

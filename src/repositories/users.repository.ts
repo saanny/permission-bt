@@ -9,4 +9,14 @@ export class UsersRepository {
     @InjectRepository(UserEntity)
     private readonly entityRepository: Repository<UserEntity>,
   ) {}
+  async findByEmail(email: string): Promise<UserEntity | null> {
+    return this.entityRepository.findOne({ where: { email } });
+  }
+  async createUser(user: Partial<UserEntity>): Promise<UserEntity> {
+    const newUser = this.entityRepository.create(user);
+    return this.entityRepository.save(newUser);
+  }
+  async findById(id: string): Promise<UserEntity | null> {
+    return this.entityRepository.findOne({ where: { id } });
+  }
 }

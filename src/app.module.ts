@@ -9,6 +9,7 @@ import { GlobalConfigModule } from 'src/config/global/global-config.module';
 import { GlobalConfigService } from 'src/config/global/global-config.service';
 import { MainDatabaseModule } from 'src/database/main-database.module';
 import { TweetsResolver } from 'src/resolvers/tweets.resolver';
+import { UsersResolver } from 'src/resolvers/users.resolver';
 import { ServicesModule } from 'src/services/service.module';
 import { GroupsResolver } from './resolvers/groups.resolver';
 @Module({
@@ -53,6 +54,6 @@ import { GroupsResolver } from './resolvers/groups.resolver';
     }),
   ],
   controllers: [],
-  providers: [GroupsResolver, TweetsResolver],
+  providers: [GroupsResolver, TweetsResolver, UsersResolver],
 })
 export class AppModule {}
