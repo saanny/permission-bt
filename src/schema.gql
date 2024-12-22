@@ -2,17 +2,131 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type TestTweet {
-  """A unique identifier"""
+"""Tweet object type."""
+type Tweet {
+  """The tweet ID"""
   id: ID!
+
+  """The timestamp when the tweet was created"""
+  createdAt: DateTime!
+
+  """The ID of the author who created the tweet"""
+  authorId: ID!
+
+  """The content of the tweet"""
+  content: String!
+
+  """The hashtags associated with the tweet"""
+  hashtags: [String!]
+
+  """The ID of the parent tweet if this is a reply"""
+  parentTweetId: ID
+
+  """The category of the tweet"""
+  category: TweetCategory
+
+  """The location associated with the tweet"""
+  location: String
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+"""The category of the tweet"""
+enum TweetCategory {
+  GENERAL
+  NEWS
+  TECH
+}
+
+"""Group object type."""
+type Group {
+  """The group ID"""
+  id: ID!
+
+  """The user IDs that are part this Group"""
+  userIds: [ID!]!
+
+  """The group IDs that are part of this Group"""
+  groupIds: [ID!]!
 }
 
 type Query {
   """
   Paginates over tweets for the given user ID This API only retrieves those tweets that are viewable for the given user ID Tweets order should be based on 
   """
-  paginateTweets(userId: ID!, limit: Int!, page: Int!): [TestTweet!]!
+  paginateTweets(userId: ID!, limit: Int!, page: Int!): [Tweet!]!
 
   """Returns true if the given user ID can edit the given tweet ID"""
   canEditTweet(userId: ID!, tweetId: ID!): Boolean!
+}
+
+type Mutation {
+  """Create a group that can be used for permissions"""
+  createGroup(CreateGroup: CreateGroupInput!): Group!
+
+  """Create a Tweet"""
+  createTweet(CreateTweet: CreateTweetInput!): Tweet!
+
+  """Updates Tweet permissions based on the input"""
+  updateTweetPermissions(UpdateTweetPermissions: UpdateTweetPermissionsInput!): Boolean!
+}
+
+"""Create group input object type."""
+input CreateGroupInput {
+  """The user IDs that are part this Group"""
+  userIds: [ID!]!
+
+  """The group IDs that are part of this Group"""
+  groupIds: [ID!]!
+}
+
+"""Create tweet input object type."""
+input CreateTweetInput {
+  """The ID of the author who created the tweet"""
+  authorId: ID!
+
+  """The content of the tweet"""
+  content: String!
+
+  """The hashtags associated with the tweet"""
+  hashtags: [String!]
+
+  """The ID of the parent tweet, if the tweet has no parent, it can be null"""
+  parentTweetId: ID
+
+  """The category of the tweet"""
+  category: TweetCategory
+
+  """The location associated with the tweet"""
+  location: String
+}
+
+"""Update tweet permissions input object type."""
+input UpdateTweetPermissionsInput {
+  """
+  If provided:
+  - if it is true it means the tweet inherits parent tweets permission. If the tweet has no parent, it means everyone can view this tweet.
+  - if it is false, it means the "viewPermissions" settings will be considered for this Tweet.
+  """
+  inheritViewPermissions: Boolean!
+
+  """
+  If provided:
+  - if it is true it means the tweet inherits parent tweets permission. If the tweet has no parent, it means everyone can edit this tweet.
+  - if it is false, it means the "editPermissions" settings will be considered for this Tweet.
+  """
+  inheritEditPermissions: Boolean!
+
+  """
+  A list of User IDs and Group IDs that can view this Tweet. It only applies if "inheritViewPermissions" is false.
+  """
+  viewPermissions: [String!]!
+
+  """
+  A list of User IDs and Group IDs that can edit this Tweet. It only applies if "inheritEditPermissions" is false.
+  """
+  editPermissions: [String!]!
 }
