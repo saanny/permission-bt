@@ -97,6 +97,9 @@ input CreateGroupInput {
 
   """The group IDs that are part of this Group"""
   groupIds: [ID!]!
+
+  """The name of the Group"""
+  name: String!
 }
 
 """Create tweet input object type."""

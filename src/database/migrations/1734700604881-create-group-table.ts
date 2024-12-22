@@ -19,6 +19,11 @@ export class CreateGroupTable1734700604881 implements MigrationInterface {
             generationStrategy: 'uuid',
           },
           {
+            name: 'name',
+            type: 'varchar',
+            length: '255',
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'NOW()',

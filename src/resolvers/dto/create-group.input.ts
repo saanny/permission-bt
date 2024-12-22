@@ -9,4 +9,9 @@ export class CreateGroupInput {
     description: 'The group IDs that are part of this Group',
   })
   groupIds: string[];
+
+  @Field(() => String, {
+    description: 'The name of the Group',
+  })
+  name: string;
 }
