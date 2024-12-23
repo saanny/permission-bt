@@ -46,6 +46,9 @@ type Group {
   """The group ID"""
   id: ID!
 
+  """The name of the Group"""
+  name: String!
+
   """The user IDs that are part this Group"""
   userIds: [ID!]!
 

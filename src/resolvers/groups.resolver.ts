@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { Group } from 'src/entities/group.entitiy';
+import { Group } from 'src/entities/group.entity';
 import { CreateGroupInput } from 'src/resolvers/dto/create-group.input';
 import { GroupsService, IGroupsService } from 'src/services/interfaces';
 

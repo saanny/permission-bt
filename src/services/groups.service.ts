@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { GroupEntity } from 'src/entities/group.entitiy';
+import { GroupEntity } from 'src/entities/group.entity';
 import { UserEntity } from 'src/entities/user.entity';
 import { GroupsRepository } from 'src/repositories/groups.repository';
 import { UsersRepository } from 'src/repositories/users.repository';
@@ -41,6 +41,7 @@ export class GroupsServiceImpl implements IGroupsService {
     });
 
     return {
+      id: group.id,
       name: group.name,
       userIds: group.users?.map((user) => user.id) || [],
       groupIds: group.childGroups?.map((parent) => parent.id) || [],

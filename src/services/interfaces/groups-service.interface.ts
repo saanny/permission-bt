@@ -4,6 +4,7 @@ export interface CreateGroupInput {
   groupIds: string[];
 }
 export interface CreateGroupResult {
+  id: string;
   name: string;
   userIds: string[];
   groupIds: string[];
