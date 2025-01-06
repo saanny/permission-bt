@@ -1,14 +1,5 @@
 version: "3.8"
 services:
-  # rabbitmq:
-  #   image: rabbitmq:3.12.14-management
-  #   restart: unless-stopped
-  #   volumes:
-  #     - rabbit_data:/var/lib/rabbitmq
-  #   ports:
-  #     - "5672:5672"
-  #     - "15672:15672"
-
   postgres:
       restart: always
       image: docker.io/bitnami/postgresql:14
