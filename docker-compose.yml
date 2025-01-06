@@ -1,21 +1,21 @@
 version: "3.8"
 services:
   postgres:
-      restart: always
-      image: docker.io/bitnami/postgresql:14
-      container_name: bettermode-postgres
-      volumes:
-        - "postgres_data:/bitnami/postgresql"
-      ports:
-        - 5432:5432
-      environment:
-        POSTGRESQL_USERNAME: postgres
-        POSTGRESQL_PASSWORD: postgres
-        POSTGRESQL_DATABASE: bettermode_task 
+    restart: always
+    image: docker.io/bitnami/postgresql:14
+    container_name: bt-postgres
+    volumes:
+      - "postgres_data:/bitnami/postgresql"
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRESQL_USERNAME: postgres
+      POSTGRESQL_PASSWORD: postgres
+      POSTGRESQL_DATABASE: bt_task 
 
   redis:
     restart: always
-    container_name: bettermode-redis
+    container_name: bt-redis
     image: redis/redis-stack-server:latest
     ports:
       - "6379:6379"
@@ -23,8 +23,34 @@ services:
       - "redis_data:/data"
     command: redis-server --requirepass mypassword
 
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bt-app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: mypassword
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_PASSWORD: postgres
+      DB_USERNAME: postgres
+      DB_NAME: bt_task
+      DB_TIMEZONE: UTC
+      JWT_SECRET: test
+      JWT_EXPIRES_IN_SECONDS: 3600000
+      NODE_ENV: development
+      PINO_PRETTY: "true"
+      SYNC_DB: "false"
+      RUN_MIGRATION: "true"
+
 volumes:
   redis_data:
-  rabbit_data:
   postgres_data:
     driver: local
